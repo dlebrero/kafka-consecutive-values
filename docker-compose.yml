@@ -1,0 +1,26 @@
+version: "2"
+services:
+ zoo1:
+   image: wurstmeister/zookeeper:3.4.6
+ kafka1:
+   build: kafka
+   links:
+    - zoo1
+   environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ADVERTISED_PORT: 9092
+      KAFKA_ZOOKEEPER_CONNECT: zoo1:2181
+      KAFKA_ADVERTISED_HOST_NAME: kafka1
+      KAFKA_CREATE_TOPICS: "device-gsp-coords:4:1,points-with-distance:4:1"
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
+ our-service: &service
+   build: our-service
+   volumes:
+    - ./our-service/src/:/app/src/
+    - ~/.m2:/root/.m2
+ our-service2: *service
+ our-service3:
+   <<: *service
+   ports:
+    - 3003:3002
+    - 3004:80
