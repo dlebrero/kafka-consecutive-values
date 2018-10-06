@@ -145,13 +145,13 @@
              store-name
              (fn [store key value]
                (let [previous (or (.get store key) [])
-                     chunk-so-far (conj previous value)]
-                 (if (= n (count chunk-so-far))
+                     buffer (conj previous value)]
+                 (if (= n (count buffer))
                    (do
-                     (.put store key (vec (drop step chunk-so-far)))
-                     chunk-so-far)
+                     (.put store key (vec (drop step buffer)))
+                     buffer)
                    (do
-                     (.put store key chunk-so-far)
+                     (.put store key buffer)
                      nil)))))
            (into-array [store-name]))
          (.filter (pred [k v]
