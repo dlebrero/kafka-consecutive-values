@@ -128,9 +128,9 @@
               (.to "points-with-distance"))]
     builder))
 
-(defn k-partition
+(defn partition-partition
   ([^StreamsBuilder builder n stream-name]
-   (k-partition builder n n stream-name))
+   (partition-partition builder n n stream-name))
   ([^StreamsBuilder builder n step stream-name]
    (let [store-name (str "partition-by-" stream-name "-" n)
          store (Stores/keyValueStoreBuilder
@@ -160,7 +160,7 @@
 (defn create-kafka-stream-topology-using-partition []
   (let [^StreamsBuilder builder (StreamsBuilder.)]
     (-> builder
-        (k-partition 2 1 device-data-topic)
+        (partition-partition 2 1 device-data-topic)
         (.mapValues (reify ValueMapper
                       (apply [this [current previous]]
                         (assoc current :dist (distance current previous)))))
