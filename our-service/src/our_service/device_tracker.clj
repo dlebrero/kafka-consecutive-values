@@ -161,9 +161,8 @@
   (let [^StreamsBuilder builder (StreamsBuilder.)]
     (-> builder
         (partition-partition 2 1 device-data-topic)
-        (.mapValues (reify ValueMapper
-                      (apply [this [current previous]]
-                        (assoc current :dist (distance current previous)))))
+        (.mapValues (value-mapper [current previous]
+                      (assoc current :dist (distance current previous))))
         (.to "points-with-distance"))
     builder))
 
