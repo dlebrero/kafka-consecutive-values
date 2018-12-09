@@ -1,6 +1,6 @@
 # Kafka Streams and KTables examples
 
-This code is the companion of the blog post [Kafka as a coordinator](http://danlebrero.com/)
+This code is the companion of the blog post [Kafka as a coordinator](https://danlebrero.com/2018/10/08/when-to-choose-ktable-or-kstream-in-kafka-streams/)
 
 This project uses Docker to create a cluster of 3 microservices that consume from a Kafka topic using the
 Kafka Streams API.
